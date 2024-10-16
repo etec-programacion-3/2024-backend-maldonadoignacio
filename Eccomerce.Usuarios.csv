@@ -1,0 +1,2 @@
+_id,username,email,password,firstName,lastName,address.street,address.city,address.state,address.zipCode,address.country,phone,role,createdAt,updatedAt,wishlist[0].productId,wishlist[1].productId,cart[0].productId,cart[1].productId,cart[0].quantity,cart[1].quantity
+670fca6198c774be28773432,johndoe,johndoe@example.com,Hola@123,John,Doe,123 Calle Principal,Ciudad Ejemplo,Estado Ejemplo,12345,País Ejemplo,+1234567890,customer,2024-10-16T00:00:00.000Z,2024-10-16T00:00:00.000Z,670fd4b798c774be28773441,670fd6bc98c774be28773442,670fd70f98c774be28773443,670fd7a698c774be28773444,1,2

@@ -1,0 +1,2 @@
+_id,userId,items[0].productId,items[1].productId,items[0].quantity,items[1].quantity,createdAt,updatedAt,totalAmount
+670fca4298c774be28773423,670fca6198c774be28773432,670fd4b798c774be28773441,670fd6bc98c774be28773442,1,2,2024-10-16T00:00:00.000Z,2024-10-16T00:00:00.000Z,104.97
