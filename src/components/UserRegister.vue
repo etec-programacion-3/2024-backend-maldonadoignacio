@@ -1,33 +1,69 @@
 <template>
-  <div class="register-container">
-    <h2>Registro de Usuario</h2>
-    <form @submit.prevent="registerUser" class="form">
-      <div class="form-group">
-        <label for="username">Nombre de Usuario:</label>
-        <input
-          type="text"
-          id="username"
-          v-model="username"
-          required
-          placeholder="Ingrese su nombre de usuario"
-        />
+  <div class="page-container">
+    <div class="register-container">
+      <div class="logo-section">
+        <h1 class="brand-name">Sportify</h1>
+        <p class="brand-slogan">Tu destino deportivo</p>
       </div>
-      <div class="form-group">
-        <label for="password">Contraseña:</label> 
-        <input
-          type="password"
-          id="password"
-          v-model="password"
-          required
-          placeholder="Ingrese su contraseña"
-        />
+      
+      <div class="form-card">
+        <h2>Crear Cuenta</h2>
+        <p class="welcome-text">Únete a la comunidad deportiva más grande</p>
+        
+        <form @submit.prevent="registerUser" class="form">
+          <div class="form-group">
+            <label for="username">Nombre de Usuario</label>
+            <div class="input-container">
+              <input
+                type="text"
+                id="username"
+                v-model="username"
+                required
+                placeholder="Ej: john.doe"
+              />
+              <span class="input-icon">👤</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <div class="input-container">
+              <input
+                type="password"
+                id="password"
+                v-model="password"
+                required
+                placeholder="Mínimo 8 caracteres"
+              />
+              <span class="input-icon">🔒</span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-register">
+            Crear cuenta
+            <span class="btn-icon">→</span>
+          </button>
+        </form>
+
+        <div class="messages">
+          <p v-if="successMessage" class="success">
+            <span class="message-icon">✓</span>
+            {{ successMessage }}
+          </p>
+          <p v-if="errorMessage" class="error">
+            <span class="message-icon">✕</span>
+            {{ errorMessage }}
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <p>¿Ya tienes una cuenta? 
+            <router-link to="/login" class="login-link">
+              Iniciar sesión
+            </router-link>
+          </p>
+        </div>
       </div>
-      <button type="submit" class="btn">Registrar</button>
-    </form>
-    <p v-if="successMessage" class="success">{{ successMessage }} 😊</p>
-    <p v-if="errorMessage" class="error">{{ errorMessage }} 😠</p>
-    <div class="footer-links">
-      <p>¿Ya tienes una cuenta? <router-link to="/login">Iniciar sesión</router-link></p>
     </div>
   </div>
 </template>
@@ -51,12 +87,11 @@ export default {
           username: this.username,
           password: this.password
         });
-        console.log('Usuario registrado:', response.data);
-        this.successMessage = response.data.message; // Mensaje de éxito
-        this.errorMessage = ''; // Limpiar el mensaje de error
+        this.successMessage = response.data.message;
+        this.errorMessage = '';
       } catch (error) {
-        this.successMessage = ''; // Limpiar el mensaje de éxito
-        this.errorMessage = error.response.data.message || 'Error al registrar el usuario'; // Mensaje de error
+        this.successMessage = '';
+        this.errorMessage = error.response.data.message || 'Error al registrar el usuario';
       }
     }
   }
@@ -64,106 +99,200 @@ export default {
 </script>
 
 <style>
+.page-container {
+  min-height: 100vh;
+  background-color: #111111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
 .register-container {
-  max-width: 500px;
-  margin: 50px auto;
-  padding: 40px;
-  background: linear-gradient(to bottom, #51eb8c 0%, #bbc8ca 100%);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  color: #000000;
+  width: 100%;
+  max-width: 480px;
   text-align: center;
-  position: relative;
-  backdrop-filter: blur(10px); /* Efecto 3D */
+}
+
+.logo-section {
+  margin-bottom: 2rem;
+}
+
+.brand-name {
+  color: #3DFF7C;
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(61, 255, 124, 0.3);
+}
+
+.brand-slogan {
+  color: #ffffff;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  opacity: 0.8;
+}
+
+.form-card {
+  background: linear-gradient(145deg, #1a1a1a, #242424);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(61, 255, 124, 0.1);
 }
 
 h2 {
-  margin-bottom: 30px;
-  font-family: 'Arial', sans-serif;
-  font-size: 28px;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  font-size: 1.75rem;
+  margin: 0 0 0.5rem 0;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
+.welcome-text {
+  color: #888888;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
   text-align: left;
 }
 
 label {
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 5px;
+  display: block;
+  color: #ffffff;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 input {
-  width: 95%;
-  padding: 13px;
-  border: 2px solid #000000; /* Color de borde azul */
-  border-radius: 10px;
-  margin-top: 5px;
-  font-size: 16px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #000000;
+  width: 100%;
+  padding: 0.875rem 1rem;
+  padding-right: 2.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(61, 255, 124, 0.1);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 input::placeholder {
-  color: rgba(0, 0, 0, 0.5);
+  color: #666666;
 }
 
 input:focus {
   outline: none;
-  border-color: #b6f1d1;
-  box-shadow: 0 0 10px rgba(128, 221, 238, 0.897);
-  
+  border-color: #3DFF7C;
+  background-color: rgba(61, 255, 124, 0.05);
+  box-shadow: 0 0 0 4px rgba(61, 255, 124, 0.1);
 }
 
-.btn {
-  padding: 12px;
-  background-color: #00bcd4;
-  color: white;
+.input-icon {
+  position: absolute;
+  right: 1rem;
+  color: #666666;
+  font-size: 1.2rem;
+}
+
+.btn-register {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(45deg, #3DFF7C, #32CD32);
+  color: #111111;
   border: none;
-  border-radius: 10px;
-  font-size: 18px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
 }
 
-.btn:hover {
-  background-color: #0004ff;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 20px rgba(0, 188, 212, 0.5);
+.btn-register:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(61, 255, 124, 0.3);
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-register:hover .btn-icon {
+  transform: translateX(4px);
+}
+
+.messages {
+  margin: 1.5rem 0;
+}
+
+.success, .error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .success {
-  color: #00ff00; /* Color verde para el mensaje de éxito */
-  margin-top: 15px;
-  font-weight: bold;
+  background-color: rgba(61, 255, 124, 0.1);
+  color: #3DFF7C;
 }
 
 .error {
-  color: #ff0000; /* Color rojo para el mensaje de error */
-  margin-top: 15px;
-  font-weight: bold;
+  background-color: rgba(255, 61, 61, 0.1);
+  color: #FF3D3D;
+}
+
+.message-icon {
+  font-size: 1.1rem;
 }
 
 .footer-links {
-  margin-top: 20px;
+  margin-top: 1.5rem;
+  color: #888888;
+  font-size: 0.9rem;
 }
 
-.footer-links a {
-  color: #ffffff;
+.login-link {
+  color: #3DFF7C;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
-.footer-links a:hover {
+.login-link:hover {
+  color: #32CD32;
   text-decoration: underline;
-  color: #000000;
+}
+
+@media (max-width: 480px) {
+  .register-container {
+    padding: 1rem;
+  }
+  
+  .form-card {
+    padding: 1.5rem;
+  }
+  
+  .brand-name {
+    font-size: 2rem;
+  }
 }
 </style>
