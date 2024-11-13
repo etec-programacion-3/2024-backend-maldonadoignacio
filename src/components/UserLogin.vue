@@ -161,7 +161,7 @@ export default {
         username: '',
         password: ''
       }
-    }
+    };  // Añadido punto y coma aquí
   },
   methods: {
     togglePassword() {
@@ -195,16 +195,22 @@ export default {
       try {
         await new Promise(resolve => setTimeout(resolve, 1500));
 
-        const response = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+      const response = await fetch('http://localhost:5000/api/auth/login', { // Ajusta el puerto según tu configuración
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
           body: JSON.stringify({
             username: this.username,
             password: this.password
           })
         });
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("La respuesta del servidor no es JSON válido");
+        }
 
         const data = await response.json();
 
@@ -219,14 +225,19 @@ export default {
         }
       } catch (error) {
         this.success = false;
-        this.message = error.message;
+        if (error.message === "La respuesta del servidor no es JSON válido") {
+          this.message = "Error de conexión con el servidor. Por favor, inténtalo más tarde.";
+        } else {
+          this.message = error.message;
+        }
       } finally {
         this.loading = false;
       }
     }
   }
-}
+};
 </script>
+
 
 <style scoped>
 .login-page {
@@ -349,7 +360,7 @@ export default {
 }
 
 .feature-text p {
-  color: #ffffff;
+  color: #000000;
   margin: 0;
   font-size: 0.875rem;
   opacity: 0.7;
@@ -425,6 +436,7 @@ input {
   border-radius: 12px;
   font-size: 1rem;
   transition: all 0.3s ease;
+  color: #333333;
 }
 
 input:focus {
@@ -462,7 +474,7 @@ input:focus {
 }
 
 .forgot-password {
-  color: #3DFF7C;
+  color: #000000;
   font-size: 0.875rem;
   text-decoration: none;
   transition: color 0.3s ease;
@@ -488,7 +500,7 @@ input:focus {
 }
 
 .checkbox-text {
-  color: #666666;
+  color: #000000;
   font-size: 0.875rem;
 }
 

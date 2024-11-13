@@ -5,7 +5,7 @@
         <div class="logo-container">
           <h1>
             <span class="logo-text">Sportify</span>
-            <span class="logo-icon">🏃‍♂️</span>
+            
           </h1>
         </div>
         
@@ -115,14 +115,16 @@ export default {
 }
 
 :root {
-  --primary-color: #00E676;
-  --secondary-color: #1DE9B6;
-  --accent-color: #00BFA5;
-  --background-dark: #121212;
-  --background-light: #1E1E1E;
+  --primary-color: #00ff88;
+  --secondary-color: #00ffbb;
+  --accent-color: #00ffd5;
+  --neon-glow: 0 0 10px rgba(0, 255, 136, 0.5), 0 0 20px rgba(0, 255, 136, 0.3), 0 0 30px rgba(0, 255, 136, 0.1);
+  --background-dark: #000000;
+  --background-light: #111111;
   --text-primary: #FFFFFF;
   --text-secondary: rgba(255, 255, 255, 0.7);
-  --shadow-color: rgba(0, 230, 118, 0.2);
+  --header-bg: rgba(0, 0, 0, 0.95);
+  --header-scrolled-bg: rgba(0, 0, 0, 0.98);
 }
 
 body {
@@ -141,20 +143,20 @@ body {
 
 /* Header Styles */
 header {
-  background: rgba(18, 18, 18, 0.95);
+  background: var(--header-bg);
   backdrop-filter: blur(10px);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
   transition: all 0.3s ease;
-  border-bottom: 2px solid transparent;
+  border-bottom: 1px solid rgba(0, 255, 136, 0.1);
 }
 
 .header-scrolled {
-  background: rgba(18, 18, 18, 0.98);
-  box-shadow: 0 2px 20px rgba(0, 230, 118, 0.15);
-  border-bottom: 2px solid var(--primary-color);
+  background: var(--header-scrolled-bg);
+  box-shadow: 0 2px 20px rgba(0, 255, 136, 0.15);
+  border-bottom: 1px solid var(--primary-color);
 }
 
 .header-content {
@@ -179,11 +181,13 @@ header {
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: 1px;
+  text-shadow: var(--neon-glow);
 }
 
 .logo-icon {
   font-size: 1.8rem;
   margin-left: 0.5rem;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.5));
 }
 
 /* Navigation */
@@ -202,20 +206,50 @@ nav {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+
+.nav-link:hover::before {
+  transform: translateX(100%);
 }
 
 .nav-link i {
   font-size: 1.1rem;
+  transition: color 0.3s ease;
 }
 
 .nav-link:hover {
-  background: rgba(0, 230, 118, 0.1);
+  background: rgba(0, 255, 136, 0.1);
   transform: translateY(-2px);
 }
 
+.nav-link:hover i {
+  color: var(--primary-color);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
 .nav-link.router-link-active {
-  background: linear-gradient(135deg, rgba(0, 230, 118, 0.1), rgba(29, 233, 182, 0.1));
-  border: 1px solid rgba(0, 230, 118, 0.2);
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  box-shadow: inset 0 0 10px rgba(0, 255, 136, 0.1);
+}
+
+.nav-link.router-link-active i {
+  color: var(--primary-color);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 /* Cart Button */
@@ -227,10 +261,16 @@ nav {
   cursor: pointer;
   position: relative;
   transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
 }
 
 .cart-button:hover {
   transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+.cart-button i {
+  color: var(--background-dark);
 }
 
 .cart-count {
@@ -247,9 +287,10 @@ nav {
   justify-content: center;
   font-size: 0.8rem;
   font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 64, 129, 0.5);
 }
 
-/* Main Content */
+/* Rest of the styles remain the same */
 main {
   margin-top: 80px;
   flex: 1;
@@ -260,7 +301,6 @@ main {
   margin-right: auto;
 }
 
-/* Footer */
 footer {
   background: var(--background-light);
   padding: 4rem 2rem 2rem;
@@ -280,6 +320,7 @@ footer {
   color: var(--primary-color);
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
 }
 
 .footer-section h4 {
@@ -325,6 +366,7 @@ footer {
 .social-link:hover {
   color: var(--primary-color);
   transform: translateY(-3px);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 .footer-bottom {
